@@ -22,7 +22,9 @@
   });
   function sekmeSec(ad) {
     document.querySelectorAll(".tab").forEach(function (b) {
-      b.setAttribute("aria-selected", b.dataset.tab === ad ? "true" : "false");
+      const secili = b.dataset.tab === ad;
+      b.setAttribute("aria-selected", secili ? "true" : "false");
+      if (secili && b.scrollIntoView) b.scrollIntoView({ block: "nearest", inline: "nearest" });
     });
     for (const k in paneller) paneller[k].hidden = (k !== ad);
     if (ilkDers[ad]) {
