@@ -124,7 +124,8 @@
       gruplar[d.group].push(d);
     });
     sira.forEach(function (g) {
-      nav.appendChild(h("div", "menu-grup", g));
+      const blok = h("div", "menu-blok" + (gruplar[g].length > 4 ? " genis" : ""));
+      blok.appendChild(h("div", "menu-grup", g));
       const ul = h("ul", "menu-liste");
       gruplar[g].forEach(function (d) {
         const li = h("li");
@@ -143,7 +144,8 @@
         li.appendChild(b);
         ul.appendChild(li);
       });
-      nav.appendChild(ul);
+      blok.appendChild(ul);
+      nav.appendChild(blok);
     });
   }
 
