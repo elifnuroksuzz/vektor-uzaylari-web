@@ -34,6 +34,18 @@
     etiketle();
   }
 
+  // --- Başlık yüksekliği: yapışkan grafik onun altında dursun ----------------
+  const baslik = document.querySelector(".site-header");
+  if (baslik) {
+    const olc = function () {
+      const yapiskan = getComputedStyle(baslik).position === "sticky";
+      document.documentElement.style.setProperty("--ust-h", (yapiskan ? baslik.offsetHeight : 0) + "px");
+    };
+    olc();
+    window.addEventListener("resize", olc);
+    if ("ResizeObserver" in window) new ResizeObserver(olc).observe(baslik);
+  }
+
   // --- 1. Sekmelerin altında kayan gösterge ---------------------------------
   const sekmeler = document.getElementById("tabs");
   if (sekmeler) {

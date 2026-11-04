@@ -68,6 +68,14 @@
 
     // Sol: adımlar (zaman çizelgesi)
     const sol = h("div", "oyn-sol");
+    const ayrinti = dugme("Önceki adımların ayrıntılarını göster", "metin oyn-ayrinti");
+    ayrinti.setAttribute("aria-pressed", "false");
+    ayrinti.addEventListener("click", function () {
+      const acik = k.classList.toggle("ayrinti-acik");
+      ayrinti.setAttribute("aria-pressed", acik ? "true" : "false");
+      ayrinti.textContent = acik ? "Önceki adımları sadeleştir" : "Önceki adımların ayrıntılarını göster";
+    });
+    sol.appendChild(ayrinti);
     this.elAdimlar = h("ol", "oyn-adimlar");
     sol.appendChild(this.elAdimlar);
     govde.appendChild(sol);
