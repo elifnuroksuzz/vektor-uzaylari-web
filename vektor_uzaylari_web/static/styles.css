@@ -340,14 +340,15 @@ body.tahta-ders { overflow: hidden; }
 /* ======================================================================
    SVG SAHNE
    ====================================================================== */
-svg .izgara { stroke: var(--line); stroke-width: 1; opacity: .7; }
+svg .izgara { stroke: var(--line); stroke-width: 1; opacity: .45; }
 svg .eksen { stroke: var(--muted); stroke-width: 1.4; }
 svg .eksen-sayi { fill: var(--muted); font-size: 10px; }
 svg .eksen-ad { fill: var(--muted); font-size: 12px; font-style: italic; font-family: var(--mat-font); }
 svg .orijin { fill: var(--muted); }
 svg .bolge { fill: var(--accent); opacity: .11; }
 svg .acik-sinir { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 5 4; opacity: .7; }
-svg .kume-dogru { stroke: var(--accent); stroke-width: 3; opacity: .75; }
+/* Küme (W) arka planda yarı saydam şerit: üstündeki vektörler seçilsin. */
+svg .kume-dogru { stroke: var(--accent); stroke-width: 14; stroke-linecap: round; opacity: .16; }
 svg .ek-dogru { stroke: var(--k-ters); stroke-width: 2.4; stroke-dasharray: 7 5; opacity: .75; }
 svg .kume-ad { fill: var(--accent); font-weight: 700; font-size: 14px; font-family: var(--mat-font); paint-order: stroke; stroke: var(--panel); stroke-width: 3px; }
 svg .span-dogru { stroke: var(--accent); stroke-width: 2.2; stroke-dasharray: 8 6; opacity: .6; }

@@ -78,6 +78,8 @@
     this.gTara = el("g", { "clip-path": kirp }, svg);
     this.gPoly = el("g", { "clip-path": kirp }, svg);
     this.gVec = el("g", { "clip-path": kirp }, svg);
+    // Vektör etiketleri okların üstünde ayrı katmanda: başka bir ok etiketi örtmesin.
+    this.gEtk = el("g", { "clip-path": kirp }, svg);
     this.gPt = el("g", {}, svg);
 
     this.range = null;
@@ -97,6 +99,7 @@
         if (t >= 1 && a.done) a.done();
         return t < 1;
       });
+      self._etiketAyir();
       if (self.anims.length) self.raf = requestAnimationFrame(tick);
       else self.raf = null;
     }
@@ -104,7 +107,7 @@
   };
   Sahne.prototype._tween = function (key, dur, fn, done) {
     this.anims = this.anims.filter(function (a) { return a.key !== key; });
-    if (dur <= 0) { fn(1); if (done) done(); return; }
+    if (dur <= 0) { fn(1); if (done) done(); this._etiketAyir(); return; }
     fn(0); // ilk karede doğru yerde dursun
     this.anims.push({ key: key, dur: dur, fn: fn, done: done, start: null });
     this._loop();
@@ -133,7 +136,7 @@
   };
 
   Sahne.prototype._sifirla = function () {
-    [this.gBg, this.gArka, this.gTara, this.gPoly, this.gVec, this.gPt].forEach(function (g) {
+    [this.gBg, this.gArka, this.gTara, this.gPoly, this.gVec, this.gEtk, this.gPt].forEach(function (g) {
       while (g.firstChild) g.removeChild(g.firstChild);
     });
     this.vecs = {}; this.pts = {}; this.polys = {};
@@ -246,12 +249,62 @@
       o.text.setAttribute("x", mx);
       o.text.setAttribute("y", my + 4 + (ny > 0.3 ? 3 : 0));
       o.text.setAttribute("text-anchor", nx > 0.3 ? "start" : (nx < -0.3 ? "end" : "middle"));
+      o.nx = nx; o.ny = ny;
       o.text.style.visibility = gorunur ? "visible" : "hidden";
     }
   };
+  // Vektör etiketleri birbirinin ya da başka bir etiketin üstüne binerse,
+  // her birini kendi okuna dik yönde adım adım uzaklaştırır.
+  Sahne.prototype._etiketAyir = function () {
+    if (!this.vecs || !this.svg || !this.svg.getBBox) return;
+    const svg = this.svg;
+    const dolu = [];
+    const kutu = function (t) {
+      try { const b = t.getBBox(); return b.width ? { x: b.x - 2, y: b.y - 1, w: b.width + 4, h: b.height + 2 } : null; }
+      catch (e) { return null; }
+    };
+    const carpisir = function (a) {
+      return dolu.some(function (b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h; });
+    };
+    svg.querySelectorAll(".kume-ad, .span-ad, .alan-ad, .nokta-ad").forEach(function (t) {
+      if (t.style.visibility === "hidden" || !t.textContent) return;
+      const b = kutu(t); if (b) dolu.push(b);
+    });
+    for (const id in this.vecs) {
+      const o = this.vecs[id], t = o.text;
+      if (!t || !t.textContent || t.style.visibility === "hidden") continue;
+      let b = kutu(t); if (!b) continue;
+      // Önce grafik alanının içine çek (uzun etiketler kenardan taşmasın).
+      let dx = 0, dy = 0;
+      const sinir = PAD + 2; // etiket katmanı bu çerçeveye kırpılır
+      if (b.x + b.w > W - sinir) dx = (W - sinir) - (b.x + b.w);
+      if (b.x + dx < sinir) dx = sinir - b.x;
+      if (b.y + b.h > H - sinir) dy = (H - sinir) - (b.y + b.h);
+      if (b.y + dy < sinir) dy = sinir - b.y;
+      if (dx || dy) {
+        t.setAttribute("x", parseFloat(t.getAttribute("x")) + dx);
+        t.setAttribute("y", parseFloat(t.getAttribute("y")) + dy);
+        b = kutu(t) || b;
+      }
+      const x0 = parseFloat(t.getAttribute("x")), y0 = parseFloat(t.getAttribute("y"));
+      const nx = o.nx || 0, ny = o.ny || -1;
+      // Önce okun kendi tarafına, olmazsa karşı tarafa doğru dene.
+      const denemeler = [];
+      for (let k = 1; k <= 6; k++) { denemeler.push(k * 9); denemeler.push(-k * 9 - 14); }
+      for (let i = 0; i < denemeler.length && carpisir(b); i++) {
+        const d = denemeler[i];
+        t.setAttribute("x", x0 + nx * d); t.setAttribute("y", y0 + ny * d);
+        b = kutu(t) || b;
+      }
+      if (carpisir(b)) { t.setAttribute("x", x0); t.setAttribute("y", y0); b = kutu(t) || b; }
+      dolu.push(b);
+    }
+  };
+
   Sahne.prototype._vekTur = function (o, kind) {
     o.kind = kind;
     o.g.setAttribute("class", "vek k-" + kind);
+    if (o.tg) o.tg.setAttribute("class", "vek k-" + kind);
     o.line.setAttribute("marker-end", "url(#" + this.on + "-ok-" + kind + ")");
   };
 
@@ -263,7 +316,8 @@
       let o = self.vecs[id];
       if (!o) {
         const g = el("g", {}, self.gVec);
-        o = { g: g, line: el("line", {}, g), text: el("text", { "class": "vek-ad" }, g) };
+        const tg = el("g", {}, self.gEtk);
+        o = { g: g, tg: tg, line: el("line", {}, g), text: el("text", { "class": "vek-ad" }, tg) };
         o.cur = { fx: hedef.fx, fy: hedef.fy, tx: hedef.fx, ty: hedef.fy }; // başlangıçtan uzayarak çık
       } else {
         delete self.vecs[id];
@@ -285,6 +339,7 @@
       const o = this.vecs[id];
       this.anims = this.anims.filter(function (a) { return a.key !== "v:" + id; });
       soldurVeSil(o.g, dur * 0.6);
+      if (o.tg) soldurVeSil(o.tg, dur * 0.6);
     }
     this.vecs = yeni;
   };
