@@ -449,6 +449,8 @@ class Handler(BaseHTTPRequestHandler):
         )
         self.send_header("Content-Length", str(len(veri)))
         self.send_header("X-Content-Type-Options", "nosniff")
+        # Ders sırasında dosyalar güncellenince tarayıcı eski CSS/JS'i göstermesin.
+        self.send_header("Cache-Control", "no-cache")
         self.end_headers()
         self.wfile.write(veri)
 
