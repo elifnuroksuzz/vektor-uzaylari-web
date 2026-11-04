@@ -239,7 +239,7 @@ strong { font-weight: 650; }
 .iddia-etiket { font-size: .72rem; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: .6px; }
 .iddia-metin { font-family: var(--mat-font); font-size: 1.08rem; }
 
-.oyn-govde { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 26px; align-items: start; }
+.oyn-govde { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 26px; align-items: start; }
 
 /* Adımlar: numaralı zaman çizelgesi (kutusuz) */
 .oyn-adimlar { list-style: none; margin: 0; padding: 0; }
@@ -282,7 +282,7 @@ strong { font-weight: 650; }
 .gerekce-ad { font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 6px; color: var(--muted); }
 
 /* Sağ sütun: grafik + kontroller */
-.oyn-sag { position: sticky; top: calc(var(--ust-h, 110px) + 14px); }
+.oyn-sag { position: sticky; top: calc(var(--ust-h, 110px) + 14px); order: -1; } /* grafik solda */
 .oyn-grafik-kutu { border: 1px solid var(--line); border-radius: var(--yuvarlak); overflow: hidden; background: var(--panel); }
 .oyn-svg {
   display: block; cursor: pointer; aspect-ratio: 1 / 1; height: auto; margin: 0 auto;
@@ -330,7 +330,7 @@ body.tahta-ders { overflow: hidden; }
   padding: 20px 28px; font-size: 1.22rem;
 }
 .oyn.tahta-acik .ornek-bar { display: none; }
-.oyn.tahta-acik .oyn-govde { grid-template-columns: minmax(0, 1fr) minmax(0, 46vw); }
+.oyn.tahta-acik .oyn-govde { grid-template-columns: minmax(0, 46vw) minmax(0, 1fr); }
 .oyn.tahta-acik .oyn-sag { top: 0; }
 .oyn.tahta-acik .oyn-svg { width: min(100%, 72vh); }
 .oyn.tahta-acik .oyn-baslik { font-size: 1.6rem; }
