@@ -9,6 +9,31 @@
     el.classList.remove(sinif); void el.offsetWidth; el.classList.add(sinif);
   }
 
+  // --- 0. Açık / koyu tema düğmesi --------------------------------------------
+  const temaDugme = document.getElementById("tema-dugme");
+  if (temaDugme) {
+    const kok = document.documentElement;
+    const sistemKoyu = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+    const koyuMu = function () {
+      return kok.dataset.theme ? kok.dataset.theme === "dark" : !!(sistemKoyu && sistemKoyu.matches);
+    };
+    const etiketle = function () {
+      const koyu = koyuMu();
+      temaDugme.setAttribute("aria-label", koyu ? "Açık temaya geç" : "Koyu temaya geç");
+      temaDugme.classList.toggle("koyu", koyu);
+    };
+    temaDugme.addEventListener("click", function () {
+      const yeni = koyuMu() ? "light" : "dark";
+      kok.classList.add("tema-gecis");
+      kok.dataset.theme = yeni;
+      try { localStorage.setItem("vu-tema", yeni); } catch (e) { /* yok say */ }
+      etiketle();
+      setTimeout(function () { kok.classList.remove("tema-gecis"); }, 450);
+    });
+    if (sistemKoyu && sistemKoyu.addEventListener) sistemKoyu.addEventListener("change", etiketle);
+    etiketle();
+  }
+
   // --- 1. Sekmelerin altında kayan gösterge ---------------------------------
   const sekmeler = document.getElementById("tabs");
   if (sekmeler) {

@@ -4,16 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vektör Uzayları</title>
+  <link rel="preload" href="fonts/stix-text-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
+  <script>try { var t = localStorage.getItem("vu-tema"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
 <body>
   <header class="site-header">
     <div class="baslik-satir">
       <h1>Vektör Uzayları</h1>
       <span class="alt-baslik">Mühendislik Matematiği · 4.1 – 4.2</span>
+      <button class="tema-dugme" id="tema-dugme" type="button" aria-label="Koyu temaya geç" title="Açık / koyu tema">
+        <span class="tema-ikon" aria-hidden="true"></span>
+      </button>
     </div>
     <nav class="tabs" id="tabs" aria-label="Bölümler">
-      <button class="tab" data-tab="kurallar" aria-selected="true"><span class="tab-no">4.1</span> Vektör Uzayları</button>
+      <button class="tab" data-tab="giris" aria-selected="true"><span class="tab-no tab-ev" aria-hidden="true">⌂</span> Başlangıç</button>
+      <button class="tab" data-tab="kurallar" aria-selected="false"><span class="tab-no">4.1</span> Vektör Uzayları</button>
       <button class="tab" data-tab="altuzaylar" aria-selected="false"><span class="tab-no">4.1.1</span> Alt Uzaylar</button>
       <button class="tab" data-tab="germe" aria-selected="false"><span class="tab-no">4.1.2</span> Doğrusal Germe</button>
       <button class="tab" data-tab="bagimsizlik" aria-selected="false"><span class="tab-no">4.2</span> Bağımsızlık ve Baz</button>
@@ -25,8 +31,93 @@
   <main id="main">
     <div id="durum" class="durum" role="status" aria-live="polite" hidden></div>
 
+    <!-- ================= BAŞLANGIÇ ================= -->
+    <section id="panel-giris" class="panel">
+      <div class="hero">
+        <div class="hero-metin">
+          <p class="hero-ust">Mühendislik Matematiği · Bölüm 4.1 – 4.2</p>
+          <h2 class="hero-baslik">Vektör uzaylarını <span class="vurgu">adım adım</span>, görerek öğren</h2>
+          <p class="hero-aciklama">Her konu kısa bir anlatımla başlar. Ardından her ispatı satır satır izler, grafiğin her adımda nasıl değiştiğini görürsün. Sonunda kendi vektörlerinle dener, sorularla pekiştirirsin.</p>
+          <div class="hero-dugmeler">
+            <button class="dugme buyuk" type="button" id="hero-basla" data-git="kurallar">Baştan başla →</button>
+            <button class="dugme ikincil buyuk" type="button" data-git="sorular">Sorulara geç</button>
+          </div>
+          <p class="hero-ilerleme" id="hero-ilerleme" hidden></p>
+        </div>
+        <svg class="hero-svg" viewBox="0 0 260 220" role="img" aria-label="İki vektör ve toplamı: paralelkenar kuralı">
+          <defs>
+            <marker id="hero-ok-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="hero-uc-1"/></marker>
+            <marker id="hero-ok-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="hero-uc-2"/></marker>
+            <marker id="hero-ok-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="hero-uc-3"/></marker>
+          </defs>
+          <g class="hero-izgara">
+            <path d="M20 20 V200 M60 20 V200 M100 20 V200 M140 20 V200 M180 20 V200 M220 20 V200 M20 20 H240 M20 60 H240 M20 100 H240 M20 140 H240 M20 180 H240"/>
+          </g>
+          <path class="hero-eksen" d="M20 180 H244 M20 180 V16"/>
+          <path class="hero-alan" d="M20 180 L140 140 L220 40 L100 80 Z"/>
+          <path class="hero-kesik" d="M140 140 L220 40 M100 80 L220 40"/>
+          <line class="hero-v hero-v1" x1="20" y1="180" x2="140" y2="140" marker-end="url(#hero-ok-1)"/>
+          <line class="hero-v hero-v2" x1="20" y1="180" x2="100" y2="80" marker-end="url(#hero-ok-2)"/>
+          <line class="hero-v hero-v3" x1="20" y1="180" x2="220" y2="40" marker-end="url(#hero-ok-3)"/>
+          <text class="hero-ad hero-ad-1" x="92" y="176">u</text>
+          <text class="hero-ad hero-ad-2" x="42" y="112">v</text>
+          <text class="hero-ad hero-ad-3" x="168" y="98">u + v</text>
+        </svg>
+      </div>
+
+      <h3 class="bolum-baslik">Konu yolu</h3>
+      <ol class="yol" id="konu-yolu">
+        <li class="yol-kart" data-bolum="kurallar">
+          <span class="yol-no">4.1</span>
+          <h4>Vektör Uzayları</h4>
+          <p>Sekiz kural (V1–V8), her birinin genel ispatı ve kuralları sağlamayan bir karşı örnek.</p>
+          <div class="yol-alt"><div class="yol-ilerleme"><span class="yol-dolgu"></span></div><span class="yol-sayi"></span></div>
+          <button class="dugme" type="button" data-git="kurallar">Başla</button>
+        </li>
+        <li class="yol-kart" data-bolum="altuzaylar">
+          <span class="yol-no">4.1.1</span>
+          <h4>Alt Uzaylar</h4>
+          <p>Bir kümenin alt uzay olup olmadığını üç koşulla test et; Ax = 0 ve süperpozisyon.</p>
+          <div class="yol-alt"><div class="yol-ilerleme"><span class="yol-dolgu"></span></div><span class="yol-sayi"></span></div>
+          <button class="dugme" type="button" data-git="altuzaylar">Başla</button>
+        </li>
+        <li class="yol-kart" data-bolum="germe">
+          <span class="yol-no">4.1.2</span>
+          <h4>Doğrusal Germe</h4>
+          <p>Doğrusal birleşim, Span ve rank; sürgülü laboratuvar ve fazörler.</p>
+          <div class="yol-alt"><div class="yol-ilerleme"><span class="yol-dolgu"></span></div><span class="yol-sayi"></span></div>
+          <button class="dugme" type="button" data-git="germe">Başla</button>
+        </li>
+        <li class="yol-kart" data-bolum="bagimsizlik">
+          <span class="yol-no">4.2</span>
+          <h4>Bağımsızlık ve Baz</h4>
+          <p>Bağımsızlık testi, baz ve boyut; statik denge ve koordinat seçimi.</p>
+          <div class="yol-alt"><div class="yol-ilerleme"><span class="yol-dolgu"></span></div><span class="yol-sayi"></span></div>
+          <button class="dugme" type="button" data-git="bagimsizlik">Başla</button>
+        </li>
+      </ol>
+
+      <div class="ek-kartlar">
+        <button class="ek-kart" type="button" data-bolum="kendi" data-git="kendi">
+          <span class="ek-ikon" aria-hidden="true">✎</span>
+          <span><strong>Kendi Vektörlerin</strong><span class="ek-aciklama">Vektörlerini yaz; span’i, bağımsızlığı ve bazı motor hesaplasın.</span></span>
+        </button>
+        <button class="ek-kart" type="button" data-bolum="sorular" data-git="sorular">
+          <span class="ek-ikon" aria-hidden="true">?</span>
+          <span><strong>Sorular</strong><span class="ek-aciklama">Satır işlemleriyle adım adım çözülen örnek sorular.</span></span>
+        </button>
+      </div>
+
+      <h3 class="bolum-baslik">Nasıl kullanılır?</h3>
+      <ol class="nasil">
+        <li><span class="nasil-no">1</span><strong>Konuyu oku</strong><span>Her sekmenin başındaki kısa anlatım tanımı ve ana fikri verir.</span></li>
+        <li><span class="nasil-no">2</span><strong>Adım adım ilerle</strong><span>Grafiğe tıkla ya da <kbd>→</kbd> tuşuna bas; her satırın gerekçesi yanında yazar.</span></li>
+        <li><span class="nasil-no">3</span><strong>Kendin dene</strong><span>🎲 ile sayıları değiştir: grafik değişir, ispat satırları geçerli kalır.</span></li>
+      </ol>
+    </section>
+
     <!-- ================= 4.1 VEKTÖR UZAYLARI ================= -->
-    <section id="panel-kurallar" class="panel">
+    <section id="panel-kurallar" class="panel" hidden>
       <details class="konu-ozet" open>
         <summary><span class="ozet-baslik">📖 Konu anlatımı — Vektör uzayı nedir?</span><span class="ozet-ipucu">gizle / göster</span></summary>
       <div class="konu-giris">

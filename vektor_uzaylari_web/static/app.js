@@ -10,7 +10,7 @@
 
   // --- Sekmeler ------------------------------------------------------------
   const paneller = {};
-  ["kurallar", "altuzaylar", "germe", "bagimsizlik", "kendi", "sorular"].forEach(function (k) {
+  ["giris", "kurallar", "altuzaylar", "germe", "bagimsizlik", "kendi", "sorular"].forEach(function (k) {
     paneller[k] = document.getElementById("panel-" + k);
   });
   const oynaticilar = {};
@@ -27,6 +27,8 @@
       if (secili && b.scrollIntoView) b.scrollIntoView({ block: "nearest", inline: "nearest" });
     });
     for (const k in paneller) paneller[k].hidden = (k !== ad);
+    document.body.dataset.bolum = ad;
+    if (ad === "giris") ilerlemeGuncelle();
     if (ilkDers[ad]) {
       const o = oynaticiAl(ad);
       if (!o.ders) dersAc(ad, ilkDers[ad], false);
@@ -34,6 +36,58 @@
     }
     if (history.replaceState) history.replaceState(null, "", "#" + ad);
   }
+
+  // --- Tamamlanan dersler ve başlangıç sayfası ----------------------------
+  const DERS_SEKMELERI = ["kurallar", "altuzaylar", "germe", "bagimsizlik"];
+  const bitenler = new Set();
+  try { JSON.parse(localStorage.getItem("vu-bitenler") || "[]").forEach(function (x) { bitenler.add(x); }); }
+  catch (e) { /* depolama kapalıysa ilerleme yalnızca bu oturumda tutulur */ }
+
+  document.addEventListener("vu:ders-bitti", function (e) {
+    const id = e.detail && e.detail.id;
+    if (!id || bitenler.has(id)) return;
+    bitenler.add(id);
+    try { localStorage.setItem("vu-bitenler", JSON.stringify(Array.from(bitenler))); } catch (err) { /* yok say */ }
+    document.querySelectorAll('.menu-oge[data-ders="' + id + '"]').forEach(function (b) {
+      b.classList.add("bitti", "yeni-bitti");
+    });
+    ilerlemeGuncelle();
+  });
+
+  function ilerlemeGuncelle() {
+    if (!icerik) return;
+    let toplamHepsi = 0, bitenHepsi = 0, ilkEksik = null;
+    DERS_SEKMELERI.forEach(function (sekme) {
+      const dersler = icerik.lesson_catalog.filter(function (d) { return d.tab === sekme; });
+      const biten = dersler.filter(function (d) { return bitenler.has(d.id); }).length;
+      toplamHepsi += dersler.length; bitenHepsi += biten;
+      if (ilkEksik === null && biten < dersler.length) ilkEksik = sekme;
+      const kart = document.querySelector('.yol-kart[data-bolum="' + sekme + '"]');
+      if (!kart) return;
+      const oran = dersler.length ? biten / dersler.length : 0;
+      kart.querySelector(".yol-dolgu").style.width = (oran * 100) + "%";
+      kart.querySelector(".yol-sayi").textContent = biten + " / " + dersler.length + " ders";
+      kart.classList.toggle("tamam", dersler.length > 0 && biten === dersler.length);
+      kart.querySelector("button").textContent = biten === 0 ? "Başla" : (biten === dersler.length ? "Tekrar et" : "Devam et");
+    });
+    const basla = document.getElementById("hero-basla");
+    const yazi = document.getElementById("hero-ilerleme");
+    if (basla) {
+      basla.dataset.git = ilkEksik || "kurallar";
+      basla.textContent = bitenHepsi === 0 ? "Baştan başla →" : (ilkEksik ? "Kaldığın yerden devam et →" : "Baştan tekrar et →");
+    }
+    if (yazi) {
+      yazi.hidden = bitenHepsi === 0;
+      yazi.textContent = "Tamamlanan: " + bitenHepsi + " / " + toplamHepsi + " ders";
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    const g = e.target.closest && e.target.closest("[data-git]");
+    if (!g || !paneller[g.dataset.git]) return;
+    sekmeSec(g.dataset.git);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   function oynaticiAl(sekme) {
     if (!oynaticilar[sekme]) oynaticilar[sekme] = new window.Oynatici(document.getElementById(sekme + "-oyn"));
@@ -77,6 +131,7 @@
         const b = h("button", "menu-oge m-" + turSinif(d.badge));
         b.type = "button";
         b.dataset.ders = d.id;
+        if (bitenler.has(d.id)) b.classList.add("bitti");
         // "V1 — Toplamada birleşme" → küçük etiket + ana metin
         const parca = d.title.split(" — ");
         const ust = parca.length > 1 ? parca[0] : "";
@@ -744,6 +799,7 @@
     kendiKur();
     sorulariKur();
     const hash = (location.hash || "").slice(1);
-    sekmeSec(paneller[hash] ? hash : "kurallar");
+    ilerlemeGuncelle();
+    sekmeSec(paneller[hash] ? hash : "giris");
   })();
 })();

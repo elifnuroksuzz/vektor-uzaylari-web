@@ -307,9 +307,12 @@
     const son = i === d.steps.length - 1;
     if (this.elIlerleme) this.elIlerleme.style.width = ((i + 1) / d.steps.length * 100) + "%";
     this.kok.classList.toggle("oyn-bitti", son);
-    if (son && !ilk && !yenidenHesap) k_yenidenOynat(this.kok, "oyn-kutla");
+    if (son && !ilk && !yenidenHesap) {
+      k_yenidenOynat(this.kok, "oyn-kutla");
+      document.dispatchEvent(new CustomEvent("vu:ders-bitti", { detail: { id: d.id } }));
+    }
     if (!ilk && !yenidenHesap) k_yenidenOynat(this.elAltyazi, "altyazi-gir");
-    this.elSayac.textContent = son ? "Son adım ∎" : (i + 1) + " / " + d.steps.length;
+    this.elSayac.textContent = son ? "✓ Tamamlandı" : (i + 1) + " / " + d.steps.length;
     this._lejant(s.scene);
     const aktifLi = lis[i];
     if (aktifLi && !ilk && !yenidenHesap && aktifLi.scrollIntoView) {
