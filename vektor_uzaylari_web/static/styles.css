@@ -437,6 +437,9 @@ input[type="text"], input[inputmode] {
 .kendi-boyut { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-bottom: 6px; padding: 14px 18px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--yuvarlak); }
 .kendi-boyut label { font-weight: 550; }
 .kendi-boyut input[type="number"] { width: 64px; font-size: 1rem; font-family: inherit; padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
+/* Giriş tablosu bir matris gösterimi değil: parantez yok, ince ızgara. */
+table.matris.kendi-tablo { border: none; background: none; padding: 0; border-collapse: collapse; }
+table.matris.kendi-tablo td { border: 1px solid var(--line); border-radius: 0; padding: 6px 10px; }
 .kendi-tablo .kafa { background: var(--accent-soft); color: var(--accent); font-weight: 700; white-space: nowrap; }
 .kendi-tablo input { width: 60px; }
 .kendi-islem { margin-top: 12px; }
@@ -447,6 +450,9 @@ input[type="text"], input[inputmode] {
 .kendi-sonuc { margin-top: 0; }
 .kendi-duzen:has(#kendi-svg[style*="none"]):has(#kendi-grafik-not[style*="none"]) { grid-template-columns: 1fr; }
 .kendi-duzen:has(#kendi-svg[style*="none"]):has(#kendi-grafik-not[style*="none"]) .kendi-grafik { display: none; }
+/* Grafik yoksa (m ≠ 2) not, sonucun üstünde ince bir bilgi satırı olur. */
+.kendi-duzen:has(#kendi-svg[style*="none"]) { grid-template-columns: 1fr; }
+#kendi-grafik-not { margin: 0; padding: 8px 12px; background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; color: var(--ink); }
 .kendi-sonuc h3 { margin-top: 0; }
 .adim-blok { border-top: 1px solid var(--line); padding: 10px 0; }
 .adim-blok:first-child { border-top: none; padding-top: 0; }
@@ -466,10 +472,23 @@ input[type="text"], input[inputmode] {
 .adim-sayac { color: var(--muted); font-size: .9rem; }
 #adim-alan { animation: adimGir .35s ease backwards; }
 
-table.matris { border-collapse: collapse; margin: 8px 0; }
-table.matris td { border: 1px solid var(--line); padding: 6px 12px; text-align: center; font-family: var(--mat-font); min-width: 36px; }
-table.matris td.rhs { background: var(--accent-soft); border-left: 3px double var(--accent); }
-table.matris td.pivot { background: var(--sonuc-soft); font-weight: 700; }
+/* Matris: ders kitabındaki gibi köşeli parantez, artırılmış kısım dik çizgiyle ayrılır. */
+table.matris {
+  --parantez: var(--ink);
+  border-collapse: separate; border-spacing: 0; margin: 10px 4px; padding: 4px 3px;
+  border-left: 2px solid var(--parantez); border-right: 2px solid var(--parantez);
+  background:
+    linear-gradient(var(--parantez), var(--parantez)) left top / 8px 2px no-repeat,
+    linear-gradient(var(--parantez), var(--parantez)) left bottom / 8px 2px no-repeat,
+    linear-gradient(var(--parantez), var(--parantez)) right top / 8px 2px no-repeat,
+    linear-gradient(var(--parantez), var(--parantez)) right bottom / 8px 2px no-repeat;
+}
+table.matris td {
+  border: none; padding: 7px 14px; text-align: center; font-family: var(--mat-font);
+  font-size: 1.08rem; min-width: 40px; border-radius: 6px; font-variant-numeric: tabular-nums;
+}
+table.matris td.rhs { background: var(--accent-soft); border-left: 1.5px solid var(--muted); border-radius: 0; }
+table.matris td.pivot { background: var(--sonuc-soft); font-weight: 700; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--sonuc) 45%, transparent); }
 table.matris tr.degisen td { animation: satirParla 1.2s ease; }
 @keyframes satirParla { 0% { background: #ffe9a8; } 100% { background: transparent; } }
 .rhs-ic { font-family: var(--mat-font); background: none; padding: 0; white-space: nowrap; }

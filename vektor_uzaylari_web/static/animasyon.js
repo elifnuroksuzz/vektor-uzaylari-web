@@ -46,6 +46,17 @@
     if ("ResizeObserver" in window) new ResizeObserver(olc).observe(baslik);
   }
 
+  // --- Gizliyken çizilen grafikler görünür olunca etiketleri yeniden yerleştir --
+  if (window.Diagrams && window.Diagrams.etiketleriYenile) {
+    document.addEventListener("toggle", function (e) {
+      if (e.target.open) requestAnimationFrame(function () { window.Diagrams.etiketleriYenile(e.target); });
+    }, true);
+    const sekmeler2 = document.getElementById("tabs");
+    if (sekmeler2) sekmeler2.addEventListener("click", function () {
+      requestAnimationFrame(function () { window.Diagrams.etiketleriYenile(document.getElementById("main")); });
+    });
+  }
+
   // --- 1. Sekmelerin altında kayan gösterge ---------------------------------
   const sekmeler = document.getElementById("tabs");
   if (sekmeler) {

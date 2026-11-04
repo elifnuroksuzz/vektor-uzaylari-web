@@ -249,7 +249,7 @@
       o.text.setAttribute("x", mx);
       o.text.setAttribute("y", my + 4 + (ny > 0.3 ? 3 : 0));
       o.text.setAttribute("text-anchor", nx > 0.3 ? "start" : (nx < -0.3 ? "end" : "middle"));
-      o.nx = nx; o.ny = ny;
+      o.nx = nx; o.ny = ny; o.etiketX = mx; o.etiketY = my + 4 + (ny > 0.3 ? 3 : 0);
       o.text.style.visibility = gorunur ? "visible" : "hidden";
     }
   };
@@ -273,6 +273,7 @@
     for (const id in this.vecs) {
       const o = this.vecs[id], t = o.text;
       if (!t || !t.textContent || t.style.visibility === "hidden") continue;
+      if (o.etiketX != null) { t.setAttribute("x", o.etiketX); t.setAttribute("y", o.etiketY); }
       let b = kutu(t); if (!b) continue;
       // Önce grafik alanının içine çek (uzun etiketler kenardan taşmasın).
       let dx = 0, dy = 0;
@@ -588,5 +589,13 @@
     });
   }
 
-  global.Diagrams = { Sahne: Sahne, sahneAl: sahneAl, draw: draw, drawSet: drawSet, dalga: dalga, toNum: toNum };
+  // Gizliyken (kapalı <details>, gizli sekme) çizilen grafiklerde etiket
+  // boyutu ölçülemez; görünür olunca etiket yerleşimini yeniden hesapla.
+  function etiketleriYenile(kok) {
+    (kok || document).querySelectorAll("svg").forEach(function (svg) {
+      if (svg._sahne && svg.getClientRects().length) svg._sahne._etiketAyir();
+    });
+  }
+
+  global.Diagrams = { Sahne: Sahne, sahneAl: sahneAl, draw: draw, drawSet: drawSet, dalga: dalga, toNum: toNum, etiketleriYenile: etiketleriYenile };
 })(window);

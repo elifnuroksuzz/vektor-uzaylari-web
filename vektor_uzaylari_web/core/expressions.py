@@ -150,7 +150,9 @@ def _terim_yaz(k: Fraction, sembol: str, ilk: bool) -> str:
     if mutlak == 1:
         govde = sembol
     else:
-        govde = f"{format_fraction(mutlak)}{sembol}"
+        metin = format_fraction(mutlak)
+        # 1/7a, 1/(7a) diye okunabilir; kesirli katsayı parantezle yazılır.
+        govde = f"({metin}){sembol}" if mutlak.denominator != 1 else f"{metin}{sembol}"
     return f"{isaret}{govde}" if ilk else f" {isaret} {govde}"
 
 

@@ -44,7 +44,12 @@ def _op_combine_text(i: int, j: int, factor: Fraction) -> str:
     else:
         isaret = "+"
         mag = -factor
-    magstr = "" if mag == 1 else f"{format_fraction(mag)}"
+    if mag == 1:
+        magstr = ""
+    elif mag.denominator != 1:
+        magstr = f"({format_fraction(mag)})"  # 3/7R2, 3/(7R2) diye okunmasın
+    else:
+        magstr = format_fraction(mag)
     return f"R{i + 1} ← R{i + 1} {isaret} {magstr}R{j + 1}"
 
 
@@ -211,7 +216,7 @@ class Eliminator:
                     r,
                     pivot_row,
                     factor,
-                    f"{col + 1}. sütundaki {format_fraction(e)} değerini sıfırlıyoruz.",
+                    f"{col + 1}. sütundaki {format_fraction(e).replace('-', '−')} değerini sıfırlıyoruz.",
                     pivot={"row": pivot_row, "column": col},
                 )
             self.pivots.append({"row": pivot_row, "column": col})

@@ -6,10 +6,30 @@
       "tier": "Doğrusal birleşim",
       "type": "combination",
       "title": "Doğrusal birleşim",
-      "prompt": "(4, -2, 4) vektörü (1, 0, 1), (3, -4, 1), (4, -6, -2) vektörlerinin doğrusal birleşimi olarak yazılabilir mi?",
+      "prompt": "(4, −2, 4) vektörü (1, 0, 1), (3, −4, 1), (4, −6, −2) vektörlerinin doğrusal birleşimi olarak yazılabilir mi?",
       "asked": "Hedef vektörü verilen üç vektörün doğrusal birleşimi yapan katsayılar var mı?",
-      "vectors": [["1", "0", "1"], ["3", "-4", "1"], ["4", "-6", "-2"]],
-      "target": ["4", "-2", "4"]
+      "vectors": [
+        [
+          "1",
+          "0",
+          "1"
+        ],
+        [
+          "3",
+          "-4",
+          "1"
+        ],
+        [
+          "4",
+          "-6",
+          "-2"
+        ]
+      ],
+      "target": [
+        "4",
+        "-2",
+        "4"
+      ]
     },
     {
       "id": "q20",
@@ -17,23 +37,63 @@
       "tier": "Homojen sistem",
       "type": "conditions",
       "title": "Homojen sistem",
-      "prompt": "Span{(1, -1, 0), (0, 1, 1), (3, -5, -2)} uzayını homojen doğrusal bir sistemin çözüm kümesi olarak ifade ediniz.",
+      "prompt": "Span{(1, −1, 0), (0, 1, 1), (3, −5, −2)} uzayını homojen doğrusal bir sistemin çözüm kümesi olarak ifade ediniz.",
       "asked": "Bu üç vektörün gerdiği uzayı tanımlayan homojen denklem(ler) nedir?",
-      "vectors": [["1", "-1", "0"], ["0", "1", "1"], ["3", "-5", "-2"]],
-      "symbols": ["x", "y", "z"],
-      "note": "Sonuç [1 1 -1][x y z]ᵀ = 0 aynı denklemin matris yazımıdır; yeni bir işlem değildir."
+      "vectors": [
+        [
+          "1",
+          "-1",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "1"
+        ],
+        [
+          "3",
+          "-5",
+          "-2"
+        ]
+      ],
+      "symbols": [
+        "x",
+        "y",
+        "z"
+      ],
+      "note": "Sonuç [1 1 −1][x y z]ᵀ = 0 aynı denklemin matris yazımıdır; yeni bir işlem değildir."
     },
     {
       "id": "ex415",
       "number": 0,
       "tier": "Örnek 4.1.5",
       "type": "conditions",
-      "title": "Bütün ℝ³'ü germek",
-      "prompt": "{(1,2,-1), (-3,1,0), (2,-3,2)} kümesinin ℝ³'ü gerdiğini gösteriniz.",
-      "asked": "Bu üç vektör ℝ³'ün tamamını gerer mi (her hedef için çözüm var mı)?",
-      "vectors": [["1", "2", "-1"], ["-3", "1", "0"], ["2", "-3", "2"]],
-      "symbols": ["a", "b", "c"],
-      "note": "Kaynak düzeltmesi: PDF s.117'de son satırın sağ tarafı hatalı basılmıştır; katsayı satırı [0,0,7] için doğru sağ taraf a+3b+7c olur."
+      "title": "Bütün ℝ³’ü germek",
+      "prompt": "{(1, 2, −1), (−3, 1, 0), (2, −3, 2)} kümesinin ℝ³’ü gerdiğini gösteriniz.",
+      "asked": "Bu üç vektör ℝ³’ün tamamını gerer mi (her hedef için çözüm var mı)?",
+      "vectors": [
+        [
+          "1",
+          "2",
+          "-1"
+        ],
+        [
+          "-3",
+          "1",
+          "0"
+        ],
+        [
+          "2",
+          "-3",
+          "2"
+        ]
+      ],
+      "symbols": [
+        "a",
+        "b",
+        "c"
+      ],
+      "note": "Kaynak düzeltmesi: PDF s.117’de son satırın sağ tarafı hatalı basılmıştır; katsayı satırı [0,0,7] için doğru sağ taraf a+3b+7c olur."
     },
     {
       "id": "q15",
@@ -41,10 +101,40 @@
       "tier": "Polinomlar",
       "type": "target_unknowns",
       "title": "Polinomlar da vektördür",
-      "prompt": "1 + x + c·x² + d·x³ polinomu şu polinomların doğrusal birleşimi ise c ve d'yi bulunuz: (-1+2x+3x²+4x³), (4+x+6x²+11x³), (1-x-x²-x³), (3+x+5x²+9x³).",
+      "prompt": "1 + x + c·x² + d·x³ polinomu şu polinomların doğrusal birleşimi ise c ve d’yi bulunuz: (−1+2x+3x²+4x³), (4+x+6x²+11x³), (1-x-x²-x³), (3+x+5x²+9x³).",
       "asked": "Birleşim 1 + x + c·x² + d·x³ polinomunu veriyorsa c ve d kaçtır?",
-      "vectors": [["-1", "2", "3", "4"], ["4", "1", "6", "11"], ["1", "-1", "-1", "-1"], ["3", "1", "5", "9"]],
-      "components": ["1", "1", "c", "d"],
+      "vectors": [
+        [
+          "-1",
+          "2",
+          "3",
+          "4"
+        ],
+        [
+          "4",
+          "1",
+          "6",
+          "11"
+        ],
+        [
+          "1",
+          "-1",
+          "-1",
+          "-1"
+        ],
+        [
+          "3",
+          "1",
+          "5",
+          "9"
+        ]
+      ],
+      "components": [
+        "1",
+        "1",
+        "c",
+        "d"
+      ],
       "note": "Polinomlar katsayı vektörlerine dönüştürülür. Katsayı sırası [a₀, a₁, a₂, a₃]; grafik yerine katsayı tablosu esastır."
     },
     {
@@ -53,10 +143,26 @@
       "tier": "4.2 Bağımlılık",
       "type": "dependence",
       "title": "Bağımlı mı, bağımsız mı?",
-      "prompt": "(1, 2, 3), (4, 5, 6), (7, 8, 9) vektörleri ℝ³'te doğrusal bağımsız mıdır? Bağımlıysa sıfır olmayan bir bağıntı bulunuz.",
+      "prompt": "(1, 2, 3), (4, 5, 6), (7, 8, 9) vektörleri ℝ³’te doğrusal bağımsız mıdır? Bağımlıysa sıfır olmayan bir bağıntı bulunuz.",
       "asked": "c₁v₁ + c₂v₂ + c₃v₃ = 0 denkleminin yalnızca aşikâr çözümü mü var?",
-      "vectors": [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]],
-      "note": "Üç vektör ℝ³'te (sayı = boyut) olduğu hâlde bağımlı: vektör sayısı tek başına ölçüt değildir, rank'e bakılır."
+      "vectors": [
+        [
+          "1",
+          "2",
+          "3"
+        ],
+        [
+          "4",
+          "5",
+          "6"
+        ],
+        [
+          "7",
+          "8",
+          "9"
+        ]
+      ],
+      "note": "Üç vektör ℝ³’te (sayı = boyut) olduğu hâlde bağımlı: vektör sayısı tek başına ölçüt değildir, rank’e bakılır."
     },
     {
       "id": "q_baz",
@@ -64,9 +170,30 @@
       "tier": "4.2 Baz",
       "type": "basis",
       "title": "Geren kümeden baz seçmek",
-      "prompt": "S = {(1, 2, 1), (2, 4, 2), (0, 1, 1), (1, 3, 2)} kümesinin gerdiği alt uzay için S'nin içinden bir baz seçiniz ve boyutu bulunuz.",
+      "prompt": "S = {(1, 2, 1), (2, 4, 2), (0, 1, 1), (1, 3, 2)} kümesinin gerdiği alt uzay için S’nin içinden bir baz seçiniz ve boyutu bulunuz.",
       "asked": "Hangi vektörler fazladır; kalanlar bağımsız ve aynı uzayı geren bir küme oluşturur mu?",
-      "vectors": [["1", "2", "1"], ["2", "4", "2"], ["0", "1", "1"], ["1", "3", "2"]],
+      "vectors": [
+        [
+          "1",
+          "2",
+          "1"
+        ],
+        [
+          "2",
+          "4",
+          "2"
+        ],
+        [
+          "0",
+          "1",
+          "1"
+        ],
+        [
+          "1",
+          "3",
+          "2"
+        ]
+      ],
       "note": "Baz, indirgenmiş matrisin sütunlarından değil, pivot sütunlarına karşılık gelen ORİJİNAL vektörlerden seçilir."
     }
   ]

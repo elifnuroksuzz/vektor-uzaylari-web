@@ -66,7 +66,7 @@
   },
   "span": {
     "intro": "Verilen vektörleri sayılarla çarpıp toplayarak elde edebileceğimiz bütün vektörlerin kümesine span denir.",
-    "linear_combo_note": "Şu an oluşturduğun vektör bir doğrusal birleşimdir. Oluşturabileceğin bütün vektörler ise span'i oluşturur.",
+    "linear_combo_note": "Şu an oluşturduğun vektör bir doğrusal birleşimdir. Oluşturabileceğin bütün vektörler ise span’i oluşturur.",
     "slider": {"min": "-3", "max": "3", "step": "0.25"},
     "examples": [
       {"id": "dogru", "label": "Bir doğru", "v1": ["1", "2"], "v2": ["0", "0"], "expected_rank": 1, "single": true, "description": "(1, 2) vektörünün bütün katları, orijinden geçen bir doğru oluşturur."},

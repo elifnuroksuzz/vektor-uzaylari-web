@@ -237,6 +237,39 @@ def to_json(x: Deger):
 
 
 _YER_TUTUCU = re.compile(r"\{\{(.+?)\}\}")
+_DOGRU = re.compile(r"^\s*dogru\((.+)\)\s*$")
+
+
+def format_line_through_origin(v: Deger) -> str:
+    """v = (p, q) doğrultusundaki, orijinden geçen doğrunun denklemi.
+
+    qx − py = 0 biçimini sadeleştirir: sıfır terimleri atar, 1 katsayısını
+    yazmaz ve ilk katsayıyı pozitif yapar. Ör. (1, 2) → "2x − y = 0",
+    (0, 3) → "x = 0", (−1, 1) → "x + y = 0".
+    """
+
+    if not is_vector(v) or len(v) != 2:
+        raise SayiHatasi("dogru(...) iki bileşenli bir vektör ister.")
+    p, q = v
+    a, b = q, -p  # ax + by = 0
+    if a == 0 and b == 0:
+        raise SayiHatasi("Sıfır vektörünün doğrusu yoktur.")
+    if a < 0 or (a == 0 and b < 0):
+        a, b = -a, -b
+    if a == 0:
+        return "y = 0"
+    if b == 0:
+        return "x = 0"
+
+    def katsayi(k: Fraction, ad: str) -> str:
+        k = abs(k)
+        if k == 1:
+            return ad
+        metin = format_scalar_display(k)
+        return ("(" + metin + ")" if "/" in metin else metin) + ad
+
+    isaret = " + " if b > 0 else " " + MINUS + " "
+    return katsayi(a, "x") + isaret + katsayi(b, "y") + " = 0"
 
 
 def fill_placeholders(metin: str, ortam: Mapping[str, Deger]) -> str:
@@ -246,6 +279,9 @@ def fill_placeholders(metin: str, ortam: Mapping[str, Deger]) -> str:
         return metin
 
     def degistir(m: "re.Match[str]") -> str:
+        dogru = _DOGRU.match(m.group(1))
+        if dogru:
+            return format_line_through_origin(evaluate(dogru.group(1), ortam))
         return format_display(evaluate(m.group(1), ortam))
 
     return _YER_TUTUCU.sub(degistir, metin)
