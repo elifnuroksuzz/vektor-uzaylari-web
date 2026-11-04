@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+vektor_uzaylari_web_yedek_*/

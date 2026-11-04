@@ -1,0 +1,18 @@
+{
+  "intro": "Toplama ve skalerle çarpmanın kurallarını keşfet.",
+  "precondition_note": "V boş olmayan bir küme, F bir cisimdir. Toplama V×V→V ve skaler çarpma F×V→V olarak tanımlıdır; kapalılık bu işlem tanımlarının bir parçasıdır.",
+  "presets": [
+    {"id": "ornek1", "label": "Örnek 1", "u": ["1", "2"], "v": ["3", "-1"], "w": ["-2", "1"], "a": "2", "b": "-1", "c": "2"},
+    {"id": "ornek2", "label": "Örnek 2", "u": ["-2", "1"], "v": ["1", "3"], "w": ["2", "-2"], "a": "-1", "b": "3", "c": "-2"}
+  ],
+  "cards": [
+    {"id": "V1", "title": "Toplamada birleşme", "formula": "u+(v+w)=(u+v)+w", "detail": "Vektörleri hangi sırayla gruplarsak gruplayalım toplam değişmez.", "uses": ["u", "v", "w"]},
+    {"id": "V2", "title": "Sıfır vektörü", "formula": "v+0=0+v=v", "detail": "Bütün vektörler için çalışan tek bir sıfır vektörü vardır.", "uses": ["v"]},
+    {"id": "V3", "title": "Toplamsal ters", "formula": "v+(-v)=(-v)+v=0", "detail": "Her vektörün toplamsal tersi vardır; toplamları sıfır vektörüdür.", "uses": ["v"]},
+    {"id": "V4", "title": "Toplamada değişme", "formula": "u+v=v+u", "detail": "Toplama sırası sonucu değiştirmez.", "uses": ["u", "v"]},
+    {"id": "V5", "title": "Vektör toplamına dağılma", "formula": "c(u+v)=cu+cv", "detail": "Skaler, vektör toplamı üzerine dağılır.", "uses": ["u", "v", "c"]},
+    {"id": "V6", "title": "Skaler toplamına dağılma", "formula": "(a+b)v=av+bv", "detail": "Skalerlerin toplamı vektör üzerine dağılır.", "uses": ["v", "a", "b"]},
+    {"id": "V7", "title": "Skaler çarpımının uyumu", "formula": "(ab)v=a(bv)", "detail": "Skalerleri önce çarpmakla sırayla uygulamak aynı sonucu verir.", "uses": ["v", "a", "b"]},
+    {"id": "V8", "title": "Birim skaler", "formula": "1v=v", "detail": "1 skaleri vektörü değiştirmez.", "uses": ["v"]}
+  ]
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vektör Uzayları</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="baslik-satir">
+      <h1>Vektör Uzayları</h1>
+      <span class="alt-baslik">Mühendislik Matematiği · 4.1 – 4.2</span>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Bölümler">
+      <button class="tab" data-tab="kurallar" aria-selected="true"><span class="tab-no">4.1</span> Vektör Uzayları</button>
+      <button class="tab" data-tab="altuzaylar" aria-selected="false"><span class="tab-no">4.1.1</span> Alt Uzaylar</button>
+      <button class="tab" data-tab="germe" aria-selected="false"><span class="tab-no">4.1.2</span> Doğrusal Germe</button>
+      <button class="tab" data-tab="bagimsizlik" aria-selected="false"><span class="tab-no">4.2</span> Bağımsızlık ve Baz</button>
+      <button class="tab" data-tab="kendi" aria-selected="false">Kendi Vektörlerin</button>
+      <button class="tab" data-tab="sorular" aria-selected="false">Sorular</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div id="durum" class="durum" role="status" aria-live="polite" hidden></div>
+
+    <!-- ================= 4.1 VEKTÖR UZAYLARI ================= -->
+    <section id="panel-kurallar" class="panel">
+      <details class="konu-ozet" open>
+        <summary><span class="ozet-baslik">📖 Konu anlatımı — Vektör uzayı nedir?</span><span class="ozet-ipucu">gizle / göster</span></summary>
+      <div class="konu-giris">
+        <div class="konu-metin">
+          <p><strong>Tanım 4.1.1.</strong> V boş olmayan bir küme, F bir cisim (bizde ℝ) olsun. V üzerinde bir <strong>toplama</strong> (V×V→V) ve bir <strong>skalerle çarpma</strong> (F×V→V) tanımlı ve aşağıdaki sekiz kural her u, v, w ∈ V ve her a, b, c ∈ F için sağlanıyorsa V’ye <strong>vektör uzayı</strong> denir.</p>
+          <p class="not">Kapalılık (iki vektörün toplamı ve bir vektörün katı yine V’de) işlemlerin tanımının parçasıdır; ayrı kart olarak yazılmadı.</p>
+          <p>Vektör sadece ok değildir: ℝⁿ, m×n matrisler, derecesi en fazla n olan polinomlar (Pₙ) ve fonksiyonlar (ör. sinyaller) da bu kuralları sağlar. Mühendislikte süperpozisyon, kuvvetlerin toplanması, sinyal karıştırma hep bu yapıyı kullanır.</p>
+        </div>
+        <aside class="mantik-kutu" aria-label="İspat mantığı">
+          <h3>Örnek mi, ispat mı?</h3>
+          <ul>
+            <li><strong>∀ (her … için)</strong> iddiası bir örnekle <em>ispatlanamaz</em>: sonsuz çok durumdan yalnızca birini kontrol etmiş oluruz. Keyfi (genel) elemanlarla cebirsel bir argüman gerekir.</li>
+            <li>Aynı iddia tek bir <strong>karşı örnekle çürütülür</strong>: ¬(∀x P(x)) ⇔ ∃x ¬P(x).</li>
+            <li>Bu uygulamada grafikler <em>ispatın resmi</em>dir; ispatın kendisi soldaki gerekçeli satırlardır. 🎲 ile sayıları değiştir: satırlar değişmez.</li>
+          </ul>
+        </aside>
+      </div>
+      </details>
+
+      <div class="ders-duzen">
+        <nav class="ders-menu" id="kurallar-menu" aria-label="Dersler"></nav>
+        <div id="kurallar-oyn"></div>
+      </div>
+    </section>
+
+    <!-- ================= 4.1.1 ALT UZAYLAR ================= -->
+    <section id="panel-altuzaylar" class="panel" hidden>
+      <details class="konu-ozet" open>
+        <summary><span class="ozet-baslik">📖 Konu anlatımı — Alt uzay</span><span class="ozet-ipucu">gizle / göster</span></summary>
+      <div class="konu-giris">
+        <div class="konu-metin">
+          <p><strong>Tanım 4.1.2–4.1.3.</strong> V bir vektör uzayı, W ⊆ V boş olmayan bir alt küme olsun. W, V’nin <strong>aynı işlemleriyle</strong> kendisi de bir vektör uzayıysa W’ye <strong>alt uzay</strong> denir. Pratikte üç koşul yeter:</p>
+          <table class="kosul-tablo">
+            <thead><tr><th>Koşul</th><th>Soru</th><th>Nasıl gösterilir?</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1. Sıfır vektörü</strong></td><td>0 ∈ W mi?</td><td>Yerine koy.</td></tr>
+              <tr><td><strong>2. Toplamaya kapalılık</strong></td><td>u, v ∈ W ⇒ u + v ∈ W?</td><td>Sağlanıyorsa: <em>keyfi</em> u, v ile genel cebir. Sağlanmıyorsa: tek karşı örnek.</td></tr>
+              <tr><td><strong>3. Skalerle çarpmaya kapalılık</strong></td><td>u ∈ W, λ ∈ ℝ ⇒ λu ∈ W?</td><td>Aynı mantık.</td></tr>
+            </tbody>
+          </table>
+          <p class="not">Neden önce sıfır? W alt uzaysa herhangi u ∈ W için 0·u = 0 ∈ W olmak zorundadır. 0 ∉ W ise hüküm hemen verilir; 0 ∈ W olması ise tek başına yetmez.</p>
+        </div>
+        <aside class="mantik-kutu">
+          <h3>Mühendislik gözüyle</h3>
+          <p><strong>Ax = 0</strong> (homojen) sistemlerin ve <strong>y″ + y = 0</strong> gibi doğrusal homojen diferansiyel denklemlerin çözüm kümeleri alt uzaydır: <em>süperpozisyon ilkesi</em> tam olarak budur.</p>
+          <p><strong>Ax = b</strong> (b ≠ 0) çözümleri alt uzay değildir (0 çözüm değil), ama “özel çözüm + alt uzay” biçimindedir.</p>
+        </aside>
+      </div>
+      </details>
+      <div class="ders-duzen">
+        <nav class="ders-menu" id="altuzaylar-menu" aria-label="Dersler"></nav>
+        <div id="altuzaylar-oyn"></div>
+      </div>
+      <div class="karsilastir-alan">
+        <button class="dugme ikincil" id="altuzay-karsilastir" aria-expanded="false">Dört örneği karşılaştır</button>
+        <div id="altuzay-tablo" hidden></div>
+      </div>
+    </section>
+
+    <!-- ================= 4.1.2 DOĞRUSAL GERME ================= -->
+    <section id="panel-germe" class="panel" hidden>
+      <details class="konu-ozet" open>
+        <summary><span class="ozet-baslik">📖 Konu anlatımı — Doğrusal birleşim ve germe</span><span class="ozet-ipucu">gizle / göster</span></summary>
+      <div class="konu-giris">
+        <div class="konu-metin">
+          <p><strong>Tanım 4.1.4.</strong> c₁v₁ + c₂v₂ + … + cₖvₖ biçimindeki vektöre v₁, …, vₖ’nin <strong>doğrusal birleşimi</strong> denir. S’nin bütün (sonlu) doğrusal birleşimlerinin kümesi <strong>Span(S)</strong>’dir; Span(∅) = {0}. Span(S) = V ise S, V’yi <strong>gerer</strong>.</p>
+          <p><strong>Rank = pivot sayısı.</strong> Vektörler ℝᵐ’de ise: rank = m ⇔ ℝᵐ’nin tamamı gerilir. Değilse span’i tanımlayan homojen denklemler (koşullar) çıkar.</p>
+          <p class="not">“Bir hedefe ulaşılır mı?” (üyelik) ile “her hedefe ulaşılır mı?” (germe) farklı sorulardır: ilki bir Ax = b sistemi, ikincisi rank sorusudur.</p>
+        </div>
+        <aside class="mantik-kutu">
+          <h3>ℝ²’de üç durum</h3>
+          <ul>
+            <li><strong>rank 2</strong>: det ≠ 0, span = ℝ² (düzlem)</li>
+            <li><strong>rank 1</strong>: orijinden geçen doğru</li>
+            <li><strong>rank 0</strong>: yalnızca orijin</li>
+          </ul>
+          <p class="not">Sayılarla tarama (noktalar) yalnızca <em>seçili katsayı aralığı</em>dır; gerçek span sonsuzdur. Hükmü ispat verir.</p>
+        </aside>
+      </div>
+      </details>
+      <div class="ders-duzen">
+        <nav class="ders-menu" id="germe-menu" aria-label="Dersler"></nav>
+        <div id="germe-oyn"></div>
+      </div>
+
+      <details class="lab" id="germe-lab">
+        <summary><span class="lab-baslik">Laboratuvar — sürgülerle w = α·v₁ + β·v₂</span></summary>
+        <div class="secici" id="germe-secici" role="group" aria-label="Span örnekleri"></div>
+        <p class="aciklama gerekce" id="germe-ornek-aciklama"></p>
+        <div class="germe-duzen">
+          <div class="germe-grafik">
+            <svg id="germe-svg" viewBox="0 0 400 400" role="img" aria-label="Vektör grafiği"></svg>
+          </div>
+          <div class="germe-kontrol">
+            <div class="vektor-girdi">
+              <label id="v1-satir">v₁ = (<input id="v1x" inputmode="decimal" value="1" aria-label="v1 x">, <input id="v1y" inputmode="decimal" value="0" aria-label="v1 y">)</label>
+              <label id="v2-satir">v₂ = (<input id="v2x" inputmode="decimal" value="0" aria-label="v2 x">, <input id="v2y" inputmode="decimal" value="1" aria-label="v2 y">)</label>
+            </div>
+            <label class="surgu" id="alfa-satir">α = <span id="alfa-deger">1</span>
+              <input type="range" id="alfa" min="-3" max="3" step="0.25" value="1"></label>
+            <label class="surgu" id="beta-satir">β = <span id="beta-deger">1</span>
+              <input type="range" id="beta" min="-3" max="3" step="0.25" value="1"></label>
+            <p class="sonuc-satir" id="germe-sonuc"></p>
+            <p class="gerekce" id="germe-rank"></p>
+            <div class="kontrol-dugmeleri">
+              <button class="dugme" id="germe-animasyon" type="button">▶ Bu değerlerle adım adım kur</button>
+            </div>
+            <div class="hedef-alan">
+              <label>Hedef: (<input id="hx" inputmode="decimal" placeholder="x" aria-label="hedef x">, <input id="hy" inputmode="decimal" placeholder="y" aria-label="hedef y">)</label>
+              <button id="hedef-dene" class="dugme" type="button">Span üyeliğini dene</button>
+              <p class="uyelik-sonuc" id="uyelik-sonuc"></p>
+            </div>
+          </div>
+        </div>
+        <p class="span-not" id="germe-span-not"></p>
+        <p id="germe-formul" class="kosul-kutu"></p>
+      </details>
+
+      <details class="lab" id="fazor-lab">
+        <summary><span class="lab-baslik">Mühendislik laboratuvarı — süperpozisyon ve fazörler</span></summary>
+        <div class="fazor-giris">
+          <p>y″ + y = 0 denkleminin (ör. sürtünmesiz yay–kütle, LC devresi) bütün çözümleri <strong>Span{cos t, sin t}</strong>’dir. Her çözüm y(t) = a·cos t + b·sin t, yani tek bir <strong>katsayı vektörü (a, b) ∈ ℝ²</strong> ile tarif edilir. Elektrikte buna <strong>fazör</strong> denir.</p>
+          <p>İki sinyali toplamak = fazörlerini (vektörleri) toplamak. Aşağıda solda ℝ²’deki fazörler, sağda zaman grafiği aynı anda değişir.</p>
+        </div>
+        <div class="fazor-duzen">
+          <div>
+            <svg id="fazor-svg" viewBox="0 0 400 400" role="img" aria-label="Fazör diyagramı"></svg>
+          </div>
+          <div>
+            <svg id="dalga-svg" viewBox="0 0 560 260" role="img" aria-label="Zaman grafiği"></svg>
+            <div class="fazor-surguler">
+              <label class="surgu"><span class="renk-cip c-y1"></span>y₁: a₁ = <span id="fa1-d">2</span><input type="range" id="fa1" min="-3" max="3" step="0.5" value="2"></label>
+              <label class="surgu">b₁ = <span id="fb1-d">0</span><input type="range" id="fb1" min="-3" max="3" step="0.5" value="0"></label>
+              <label class="surgu"><span class="renk-cip c-y2"></span>y₂: a₂ = <span id="fa2-d">0</span><input type="range" id="fa2" min="-3" max="3" step="0.5" value="0"></label>
+              <label class="surgu">b₂ = <span id="fb2-d">1.5</span><input type="range" id="fb2" min="-3" max="3" step="0.5" value="1.5"></label>
+            </div>
+            <div class="fazor-sonuc" id="fazor-sonuc"></div>
+          </div>
+        </div>
+        <details class="kapali-bolum">
+          <summary>İspat: cos t ve sin t doğrusal bağımsızdır (4.2)</summary>
+          <div class="kosul-kutu">
+            <p>c₁·cos t + c₂·sin t = 0 <strong>her t için</strong> sağlansın (fonksiyon uzayında sıfır vektörü = sıfır fonksiyonu).</p>
+            <p>t = 0 koy: c₁·1 + c₂·0 = 0 ⇒ c₁ = 0.  t = π/2 koy: c₁·0 + c₂·1 = 0 ⇒ c₂ = 0.</p>
+            <p>Yalnızca aşikâr çözüm ⇒ {cos t, sin t} bağımsız; ve çözüm uzayını gerdiği için bir <strong>baz</strong>dır: çözüm uzayının boyutu 2’dir. (a, b) katsayıları bu bazdaki koordinatlardır.</p>
+            <p class="not">Dikkat: tersi yönde “birkaç t değerinde sıfır çıktı” demek bağımlılık ispatı değildir; bağımlılık için eşitlik HER t’de sağlanmalıdır.</p>
+          </div>
+        </details>
+      </details>
+    </section>
+
+    <!-- ================= 4.2 BAĞIMSIZLIK VE BAZ ================= -->
+    <section id="panel-bagimsizlik" class="panel" hidden>
+      <details class="konu-ozet" open>
+        <summary><span class="ozet-baslik">📖 Konu anlatımı — Bağımlılık, bağımsızlık, baz</span><span class="ozet-ipucu">gizle / göster</span></summary>
+      <div class="konu-giris">
+        <div class="konu-metin">
+          <p><strong>Bağımsızlık.</strong> {v₁, …, vₖ} kümesi için c₁v₁ + … + cₖvₖ = 0 denkleminin <strong>tek</strong> çözümü c₁ = … = cₖ = 0 ise küme <strong>doğrusal bağımsızdır</strong>; sıfır olmayan bir çözüm varsa <strong>bağımlıdır</strong>.</p>
+          <p><strong>Ölçüt.</strong> Vektörleri bir matrisin sütunlarına yaz: <em>her sütunda pivot</em> varsa (rank = k) bağımsız; serbest sütun varsa bağımlı. ℝᵐ’de m’den fazla vektör daima bağımlıdır (rank ≤ m &lt; k). Eşit sayıda vektör de bağımlı olabilir.</p>
+          <p><strong>Baz.</strong> B, V’nin bazı ⇔ B bağımsız ve Span(B) = V. Her vektör baz cinsinden <strong>tek bir</strong> biçimde yazılır; bu katsayılar koordinatlardır. Bazdaki vektör sayısı <strong>boyut</strong>tur: dim ℝⁿ = n, dim Pₙ = n + 1, dim M₂ₓ₂ = 4.</p>
+        </div>
+        <aside class="mantik-kutu">
+          <h3>Mühendislik gözüyle</h3>
+          <ul>
+            <li><strong>Statik denge:</strong> ΣF = 0 olan kuvvetler kapalı bir çokgen oluşturur ⇒ doğrusal bağımlıdır.</li>
+            <li><strong>Koordinat sistemi seçimi</strong> (eğik düzlem, robot eklemleri) = baz seçimi.</li>
+            <li><strong>Diferansiyel denklemler:</strong> {cos t, sin t} çözüm uzayının bazıdır (bkz. fazör laboratuvarı).</li>
+          </ul>
+          <p class="not">ℝⁿ’de kendi vektörlerinle bağımsızlık testi ve baz seçimi: “Kendi Vektörlerin” sekmesi.</p>
+        </aside>
+      </div>
+      </details>
+      <div class="ders-duzen">
+        <nav class="ders-menu" id="bagimsizlik-menu" aria-label="Dersler"></nav>
+        <div id="bagimsizlik-oyn"></div>
+      </div>
+    </section>
+
+    <!-- ================= KENDİ VEKTÖRLERİN ================= -->
+    <section id="panel-kendi" class="panel" hidden>
+      <h2>Kendi Vektörlerinle Dene</h2>
+      <p class="intro">Kendi vektörlerini sütunlara yaz; gerilen uzayı incele, bağımsızlığı test et, baz seç ya da bir hedefin doğrusal birleşim olup olmadığını kontrol et. <strong>m</strong> bileşen sayısı (satır), <strong>n</strong> vektör sayısıdır (sütun).</p>
+
+      <div class="kendi-boyut">
+        <label>Bileşen sayısı m: <input id="kendi-m" type="number" min="1" max="8" value="3"></label>
+        <label>Vektör sayısı n: <input id="kendi-n" type="number" min="1" max="8" value="2"></label>
+        <button class="dugme" id="kendi-olustur" type="button">Giriş tablosunu oluştur</button>
+      </div>
+      <p class="gerekce">Her sütuna bir vektör yaz. Kesir (−2/3) ve ondalık (0.25) girebilirsin. (1 ≤ m, n ≤ 8)</p>
+
+      <div id="kendi-tablo-alan"></div>
+
+      <div class="kendi-islem" id="kendi-islem" hidden>
+        <div class="kontrol-dugmeleri">
+          <button class="dugme" id="kendi-span-btn" type="button">Gerilen uzayı incele</button>
+          <button class="dugme" id="kendi-bag-btn" type="button">Bağımsız mı? Baz seç</button>
+          <button class="dugme ikincil" id="kendi-hedef-btn" type="button">Hedef vektörü kontrol et</button>
+        </div>
+        <div class="hedef-alan" id="kendi-hedef-alan" hidden>
+          <p>Hedef vektör (m bileşen):</p>
+          <div id="kendi-hedef-girdi" class="kendi-hedef-girdi"></div>
+          <button class="dugme" id="kendi-hedef-hesapla" type="button">Hesapla</button>
+        </div>
+      </div>
+
+      <div class="kendi-duzen">
+        <div class="kendi-grafik">
+          <svg id="kendi-svg" viewBox="0 0 400 400" role="img" aria-label="Vektör grafiği" style="display:none"></svg>
+          <p class="gerekce" id="kendi-grafik-not" style="display:none"></p>
+        </div>
+        <div class="detay kendi-sonuc" id="kendi-sonuc"><p class="gerekce">Tabloyu oluşturup bir işlem seçin.</p></div>
+      </div>
+
+      <details class="kapali-bolum" id="kendi-adim-det" hidden>
+        <summary>Hesabı adım adım göster</summary>
+        <div id="kendi-adimlar"></div>
+      </details>
+    </section>
+
+    <!-- ================= SORULAR ================= -->
+    <section id="panel-sorular" class="panel" hidden>
+      <div class="soru-duzen">
+        <aside class="soru-liste" id="soru-liste" aria-label="Soru listesi"></aside>
+        <div class="soru-govde" id="soru-govde">
+          <p class="bos-ipucu">Soldan bir soru seçin.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>Bir karşı örnek, bir “her … için” iddiasının yanlış olduğunu gösterir. İddianın doğru olduğunu göstermek için genel bir gerekçe gerekir. · ← → tuşları: adım değiştir · Esc: tahta modundan çık</small>
+  </footer>
+
+  <script src="ortak.js"></script>
+  <script src="diagrams.js"></script>
+  <script src="player.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
