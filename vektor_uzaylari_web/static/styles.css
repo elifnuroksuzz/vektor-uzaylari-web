@@ -515,6 +515,129 @@ kbd {
   .kosul-tablo th, .kosul-tablo td { padding: 7px 8px; font-size: .86rem; }
 }
 
+/* ======================================================================
+   ARAYÜZ ANİMASYONLARI
+   ====================================================================== */
+:root { --yumusak: cubic-bezier(.22, .8, .3, 1); --zipla: cubic-bezier(.34, 1.56, .64, 1); }
+
+/* Logo: hafif nefes alan parıltı */
+.site-header h1::before {
+  background: linear-gradient(135deg, var(--accent), var(--k-giris3), var(--k-giris2), var(--accent));
+  background-size: 300% 300%;
+  animation: logoAkis 9s ease-in-out infinite;
+  transition: transform .4s var(--zipla);
+}
+.site-header h1:hover::before { transform: rotate(-10deg) scale(1.08); }
+@keyframes logoAkis { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* Sekmeler: kayan alt gösterge */
+.tabs.gostergeli { position: relative; }
+.tabs.gostergeli .tab[aria-selected="true"] { border-bottom-color: transparent; }
+.tab-gosterge {
+  position: absolute; left: 0; bottom: 0; height: 3px; border-radius: 3px 3px 0 0;
+  background: var(--accent); pointer-events: none;
+}
+.tab-gosterge.hazir { transition: transform .38s var(--yumusak), width .38s var(--yumusak); }
+.tab .tab-no { transition: background .25s, color .25s, transform .3s var(--zipla); display: inline-block; }
+.tab:hover .tab-no { transform: translateY(-1px); }
+.tab[aria-selected="true"] .tab-no { animation: rozetZipla .45s var(--zipla); }
+@keyframes rozetZipla { 0% { transform: scale(.7); } 100% { transform: scale(1); } }
+
+/* Panel değişimi: içerik sırayla yukarı kayarak gelir */
+.panel:not([hidden]) > :not(.belir) { animation: yukariGir .5s var(--yumusak) both; }
+.panel:not([hidden]) > *:nth-child(2) { animation-delay: .07s; }
+.panel:not([hidden]) > *:nth-child(3) { animation-delay: .14s; }
+.panel:not([hidden]) > *:nth-child(4) { animation-delay: .21s; }
+.panel:not([hidden]) > *:nth-child(n+5) { animation-delay: .28s; }
+@keyframes yukariGir { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes solaGir { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes belirGir { from { opacity: 0; } to { opacity: 1; } }
+
+/* Açılır bölümler: içerik kayarak açılır */
+details[open] > :not(summary) { animation: acilGir .4s var(--yumusak); }
+@keyframes acilGir { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.konu-ozet > summary::after { transition: transform .3s var(--yumusak); }
+.lab > summary, .kapali-bolum > summary { transition: color .2s; }
+.lab > summary:hover, .kapali-bolum > summary:hover { color: var(--accent); }
+
+/* Kartlar: üzerine gelince hafif yükselir */
+.konu-ozet, .lab, .oyn, .soru-govde, .detay { transition: box-shadow .3s, transform .3s var(--yumusak); }
+.lab:hover, .detay:hover { box-shadow: 0 2px 4px rgba(20, 30, 50, .06), 0 12px 28px rgba(20, 30, 50, .09); }
+.mantik-kutu { transition: transform .3s var(--yumusak), box-shadow .3s; }
+.mantik-kutu:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(47, 91, 208, .12); }
+
+/* Kaydırınca belirme */
+.belir { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--yumusak), transform .6s var(--yumusak); }
+.belir.gorundu { opacity: 1; transform: none; }
+
+/* Düğmeler: dalga efekti ve basma hissi */
+.dugme, .tab, .menu-oge, .soru-oge { position: relative; overflow: hidden; }
+.dugme { transition: background .15s, box-shadow .2s, filter .15s, transform .15s var(--zipla); }
+.dugme:hover:not(:disabled) { transform: translateY(-1px); }
+.dugme:active:not(:disabled) { transform: scale(.96); }
+.dugme.yuvarlak:hover:not(:disabled) { transform: scale(1.08); }
+.dalga-efekt {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: currentColor; opacity: .25; transform: scale(0);
+  animation: dalgaYay .6s ease-out forwards;
+}
+.dugme:not(.ikincil):not(.metin) .dalga-efekt { background: #fff; }
+@keyframes dalgaYay { to { transform: scale(1); opacity: 0; } }
+
+/* Ders menüsü ve soru listesi: sırayla gelir, üzerine gelince kayar */
+.kademe-gir { animation: solaGir .4s var(--yumusak) both; animation-delay: calc(var(--sira, 0) * 35ms); }
+.menu-oge { transition: background .2s, border-color .2s, padding-left .25s var(--yumusak); }
+.menu-oge:hover { padding-left: 16px; }
+.menu-oge[aria-current="true"] { padding-left: 14px; }
+.soru-oge { transition: background .2s, border-color .2s, transform .25s var(--yumusak), box-shadow .25s; }
+.soru-oge:hover { transform: translateX(4px); box-shadow: var(--golge); }
+
+/* Oynatıcı: ders değişimi, ilerleme çubuğu, son adım kutlaması */
+.oyn.ders-gir { animation: yukariGir .45s var(--yumusak); }
+.oyn-ilerleme { height: 4px; border-radius: 4px; background: var(--line); margin-top: 12px; overflow: hidden; }
+.oyn-ilerleme-dolgu {
+  display: block; height: 100%; width: 0; border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--k-giris3));
+  transition: width .5s var(--yumusak), background .4s;
+}
+.oyn.oyn-bitti .oyn-ilerleme-dolgu { background: linear-gradient(90deg, var(--k-icerde), var(--k-giris2)); }
+.oyn.oyn-kutla .oyn-grafik-kutu { animation: kutlaParla 1.1s ease-out; }
+.oyn.oyn-bitti .oyn-sayac { color: var(--ok); font-weight: 700; animation: rozetZipla .5s var(--zipla); }
+@keyframes kutlaParla {
+  0% { box-shadow: 0 0 0 0 rgba(30, 138, 82, .55); border-color: var(--k-icerde); }
+  100% { box-shadow: 0 0 0 16px rgba(30, 138, 82, 0); }
+}
+.oyn-altyazi.altyazi-gir { animation: belirGir .45s ease; }
+.oyn-adim.aktif::before { animation: numaraNabiz 2.4s ease-in-out infinite; }
+@keyframes numaraNabiz {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47, 91, 208, .35); }
+  50% { box-shadow: 0 0 0 6px rgba(47, 91, 208, 0); }
+}
+.oyn-nokta:hover { transform: scale(1.3); }
+.oyn-nokta.aktif { animation: noktaZipla .4s var(--zipla); }
+@keyframes noktaZipla { 0% { transform: scale(.8); } 100% { transform: scale(1.35); } }
+.oyn-svg { transition: filter .25s; }
+.oyn-grafik-kutu:hover .oyn-svg { filter: drop-shadow(0 0 1px rgba(47, 91, 208, .25)); }
+.oyn-grafik-kutu { transition: border-color .25s, box-shadow .25s; }
+.oyn-grafik-kutu:hover { border-color: var(--accent); }
+.lejant-oge { animation: belirGir .4s ease both; }
+
+/* Sonuç kutuları */
+.icerik-gir { animation: yukariGir .4s var(--yumusak); }
+.vurgu-gir { animation: vurguGir .6s var(--zipla); }
+@keyframes vurguGir { 0% { opacity: 0; transform: scale(.96); } 100% { opacity: 1; transform: none; } }
+.nabiz-gir { animation: nabizGir .35s var(--zipla); }
+@keyframes nabizGir { 0% { transform: scale(.98); } 50% { transform: scale(1.015); } 100% { transform: none; } }
+.sonuc-kutu { animation: vurguGir .55s var(--zipla) both; }
+
+/* Giriş kutuları ve sürgüler */
+input[type="text"], input[inputmode], .kendi-boyut input[type="number"] { transition: border-color .2s, box-shadow .2s; }
+input[type="text"]:focus, input[inputmode]:focus, .kendi-boyut input[type="number"]:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+}
+input[type="range"] { accent-color: var(--accent); cursor: grab; }
+input[type="range"]:active { cursor: grabbing; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }

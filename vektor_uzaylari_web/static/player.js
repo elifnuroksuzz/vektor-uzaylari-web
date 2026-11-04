@@ -29,6 +29,16 @@
     this._kur();
   }
 
+  // Bir CSS animasyon sınıfını (yeniden) tetikler.
+  function k_yenidenOynat(el, sinif) {
+    if (!el) return;
+    el.classList.remove(sinif); void el.offsetWidth; el.classList.add(sinif);
+    el.addEventListener("animationend", function son(e) {
+      if (e.target !== el) return;
+      el.classList.remove(sinif); el.removeEventListener("animationend", son);
+    });
+  }
+
   function dugme(metin, sinif, etiket) {
     const b = h("button", "dugme " + (sinif || ""), metin);
     b.type = "button";
@@ -47,6 +57,11 @@
     bas.appendChild(this.elBaslik);
     this.elIddia = h("div", "oyn-iddia");
     bas.appendChild(this.elIddia);
+    const ilerleme = h("div", "oyn-ilerleme");
+    ilerleme.setAttribute("aria-hidden", "true");
+    this.elIlerleme = h("span", "oyn-ilerleme-dolgu");
+    ilerleme.appendChild(this.elIlerleme);
+    bas.appendChild(ilerleme);
     k.appendChild(bas);
 
     const govde = h("div", "oyn-govde");
@@ -136,6 +151,9 @@
     if (!ayniDers) { this.adim = 0; this.durdur(); this.duzenAcik = false; }
     else this.adim = Math.min(this.adim, ders.steps.length - 1);
     this._baslikCiz();
+    if (!ayniDers) {
+      k_yenidenOynat(this.kok, "ders-gir");
+    }
     this._ornekCiz();
     this._adimlariCiz();
     this._goster(!ayniDers, true);
@@ -287,6 +305,10 @@
     this.elAltyazi.textContent = s.caption || "";
     this.elAltyazi.hidden = !s.caption;
     const son = i === d.steps.length - 1;
+    if (this.elIlerleme) this.elIlerleme.style.width = ((i + 1) / d.steps.length * 100) + "%";
+    this.kok.classList.toggle("oyn-bitti", son);
+    if (son && !ilk && !yenidenHesap) k_yenidenOynat(this.kok, "oyn-kutla");
+    if (!ilk && !yenidenHesap) k_yenidenOynat(this.elAltyazi, "altyazi-gir");
     this.elSayac.textContent = son ? "Son adım ∎" : (i + 1) + " / " + d.steps.length;
     this._lejant(s.scene);
     const aktifLi = lis[i];
