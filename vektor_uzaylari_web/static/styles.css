@@ -264,12 +264,6 @@ strong { font-weight: 650; }
 @keyframes adimGir { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes matGir { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
 .oyn-adim-ust { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-.tur-etiket { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--accent); }
-.t-karsi .tur-etiket { color: var(--hata); }
-.t-sonuc .tur-etiket { color: var(--ok); }
-.t-uyari .tur-etiket { color: #b07d00; }
-.t-muh .tur-etiket { color: var(--k-giris2); }
-.t-kurulum .tur-etiket { color: var(--muted); }
 .oyn-adim-baslik { font-weight: 650; font-size: 1.04rem; }
 .oyn-metin { margin: 6px 0; }
 .mat-blok { margin: 6px 0; }

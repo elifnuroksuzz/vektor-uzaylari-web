@@ -9,10 +9,6 @@
   const VU = global.VU;
   const h = VU.h;
 
-  const TUR_AD = {
-    kurulum: "Kurulum", ispat: "İspat", karsi: "Karşı örnek",
-    sonuc: "Sonuç", uyari: "Dikkat", muh: "Mühendislik"
-  };
   const LEJANT = {
     giris: "girdi", giris2: "girdi", giris3: "girdi", ara: "ara adım", sonuc: "sonuç",
     icerde: "kümede (∈ W)", disarda: "küme dışında / farklı", ters: "ters vektör",
@@ -257,7 +253,6 @@
       const li = h("li", "oyn-adim t-" + s.kind);
       li.dataset.no = i + 1;
       const ust = h("div", "oyn-adim-ust");
-      ust.appendChild(h("span", "tur-etiket", TUR_AD[s.kind] || s.kind));
       ust.appendChild(h("span", "oyn-adim-baslik", s.title));
       li.appendChild(ust);
       if (s.text) VU.metinYaz(li, s.text, "oyn-metin");
